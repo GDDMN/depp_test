@@ -5,12 +5,6 @@ public class PlayerController : Actor
   [SerializeField] private ActorMovements _actorMovements;
   private float _direction;
 
-  private void Start()
-  {
-    //Hurt = false;
-  }
-
-
   private void Update()
   {
     Run();

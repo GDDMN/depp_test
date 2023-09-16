@@ -15,7 +15,7 @@ public class ActorMovements : MonoBehaviour
 
   public Transform _groundCheckPoint;
 
-  private bool _onGround = true;
+  private bool _onGround = false;
   private Vector3 _startPosition;
   private float _progress = 0.0f;
 
@@ -74,10 +74,9 @@ public class ActorMovements : MonoBehaviour
     _onGround = false;
     if (Physics.Raycast(ray, out hit, distance))
     {
-      Debug.Log("HIT!");
-
       if (hit.collider.gameObject.layer == 12)
         _onGround = true;
+        IsJumping = false;
     }
   }
 
