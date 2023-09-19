@@ -15,23 +15,17 @@ public class ActorMovements : MonoBehaviour
 
   public Transform _groundCheckPoint;
 
-  private bool _onGround = false;
+  private bool _onGround = true;
   private Vector3 _startPosition;
   private float _progress = 0.0f;
 
   public bool OnGround => _onGround;
   public bool IsJumping { get; private set; }
 
-  private void Update()
-  {
-    //OnGroundCheck();
-  }
-
   public void Run(float direction)
   {
     Vector3 startPosition = _actorObject.position;
 
-    //float xPos = Mathf.Clamp(startPosition.x + direction * _walkSpeed * Time.deltaTime, -11.0f, 21.0f);
     float xPos = startPosition.x + direction * _walkSpeed * Time.deltaTime;
     _actorObject.position = new Vector3(xPos, startPosition.y, startPosition.z);
   }
@@ -64,24 +58,12 @@ public class ActorMovements : MonoBehaviour
       IsJumping = false;
   }
 
-  private void OnGroundCheck()
+  private void OnCollisionEnter(Collision collision)
   {
-    float distance = 1.5f;
-
-    Ray ray = new Ray(_groundCheckPoint.position, Vector3.down);
-    RaycastHit hit;
-
-    _onGround = false;
-    if (Physics.Raycast(ray, out hit, distance))
+    if(collision.gameObject.layer == 12)
     {
-      if (hit.collider.gameObject.layer == 12)
-        _onGround = true;
-        IsJumping = false;
+      _onGround = true;
+      IsJumping = false;
     }
-  }
-
-  private void OnTriggerEnter(Collider other)
-  {
-    IsJumping = false;
   }
 }
