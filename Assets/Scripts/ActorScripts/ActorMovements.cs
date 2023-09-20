@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ActorMovements : MonoBehaviour
@@ -15,12 +13,16 @@ public class ActorMovements : MonoBehaviour
 
   public Transform _groundCheckPoint;
 
-  private bool _onGround = true;
   private Vector3 _startPosition;
   private float _progress = 0.0f;
 
-  public bool OnGround => _onGround;
+  private float groundCheckDistance = 0.3f;
   public bool IsJumping { get; private set; }
+
+  private void OnDrawGizmos()
+  {
+    Gizmos.DrawLine(_groundCheckPoint.position, _groundCheckPoint.position + new Vector3(0f, -groundCheckDistance, 0f));
+  }
 
   public void Run(float direction)
   {
@@ -32,12 +34,14 @@ public class ActorMovements : MonoBehaviour
 
   public void Jump()
   {
-    if (!_onGround)
+    if (!OnGroundCheck())
       return;
 
     IsJumping = true;
 
     _progress = 0.0f;
+
+    Debug.Log(OnGroundCheck() + " , " + IsJumping);
     _startPosition = _actorObject.position;
   }
 
@@ -58,12 +62,22 @@ public class ActorMovements : MonoBehaviour
       IsJumping = false;
   }
 
-  private void OnCollisionEnter(Collision collision)
+  private bool OnGroundCheck()
   {
-    if(collision.gameObject.layer == 12)
+    Ray2D ray = new Ray2D(_groundCheckPoint.position, Vector2.down * groundCheckDistance);
+    RaycastHit2D hit;
+    hit = Physics2D.Raycast(_groundCheckPoint.position, Vector2.down * groundCheckDistance);
+
+    if (hit.collider != null)
     {
-      _onGround = true;
-      IsJumping = false;
+      return true;
     }
+
+    return false;
+  }
+
+  private void OnTriggerEnter2D(Collider2D collision)
+  {
+    IsJumping = false;
   }
 }

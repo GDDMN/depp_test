@@ -14,7 +14,7 @@ public class PlayerController : Actor
 
   private void FixedUpdate()
   {
-    if (_actorMovements.IsJumping)
+    if(_actorMovements.IsJumping)
       _actorMovements.JumpAnimation();
   }
 
