@@ -1,15 +1,40 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : Actor
 {
   [SerializeField] private ActorMovements _actorMovements;
+  private PlayerInput playerInput;
   private float _direction;
+
+  private void Awake()
+  {
+    playerInput = new PlayerInput();
+    playerInput.Player.Jump.performed += context => Jump();
+  }
+
+  private void OnEnable()
+  {
+    playerInput.Enable();
+  }
+
+  private void OnDisable()
+  {
+    playerInput.Disable();
+  }
+
+  private void Start()
+  {
+  }
 
   private void Update()
   {
+    _direction = playerInput.Player.Run.ReadValue<float>();
     Run();
-    Jump();
-    Attack();
+
+    //Run();
+    //Jump();
+    //Attack();
   }
 
   private void FixedUpdate()
