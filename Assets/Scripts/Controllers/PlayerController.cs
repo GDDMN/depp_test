@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerController : Actor
 {
   [SerializeField] private ActorMovements _actorMovements;
+  [SerializeField] private ActorShooting _actorShooting;
   private PlayerInput playerInput;
   private float _direction;
 
@@ -24,16 +25,13 @@ public class PlayerController : Actor
 
   private void Start()
   {
+    playerInput.Player.Shoot.performed += context => Attack();
   }
 
   private void Update()
   {
     _direction = playerInput.Player.Run.ReadValue<float>();
     Run();
-
-    //Run();
-    //Jump();
-    //Attack();
   }
 
   private void FixedUpdate()
@@ -51,11 +49,9 @@ public class PlayerController : Actor
 
   private void Attack()
   {
-    //if (!_actorMovements.IsJumping && _actorMovements.OnGround && Mathf.Abs(_direction) < .01f)
-    //{
-    //  if (Input.GetButtonDown("Fire1"))
-    //    actorAttack.StartAttack();
-    //}
+    Vector3 mousePos = Camera.main.ScreenToWorldPoint(playerInput.Player.Aiming.ReadValue<Vector2>());
+    Vector2 direction = mousePos - transform.position;
+    _actorShooting.Shoot(direction);
   }
 
   private void Jump()

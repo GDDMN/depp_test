@@ -1,18 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ActorShooting : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+  [SerializeField] private Projectile _projectile;
+  [SerializeField] private float _speed;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  public void Shoot(Vector2 direction)
+  {
+    var projectile = Instantiate(_projectile, transform.position, Quaternion.identity);
+    projectile.GetComponent<Rigidbody2D>().velocity = _speed * direction;
+  }
 }

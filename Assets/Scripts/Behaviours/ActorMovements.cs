@@ -62,7 +62,7 @@ public class ActorMovements : MonoBehaviour
       IsJumping = false;
   }
 
-  private bool OnGroundCheck()
+  public bool OnGroundCheck()
   {
     Ray2D ray = new Ray2D(_groundCheckPoint.position, Vector2.down * groundCheckDistance);
     RaycastHit2D hit;
