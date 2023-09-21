@@ -11,7 +11,6 @@ public class PlayerController : Actor
   private void Awake()
   {
     playerInput = new PlayerInput();
-    playerInput.Player.Jump.performed += context => Jump();
   }
 
   private void OnEnable()
@@ -27,13 +26,16 @@ public class PlayerController : Actor
   private void Start()
   {
     playerInput.Player.Shoot.performed += context => Attack();
+    playerInput.Player.Jump.performed += context => Jump();
   }
 
   private void FixedUpdate()
   {
     _direction = playerInput.Player.Run.ReadValue<float>();
+
     Run();
     mousePos = Camera.main.ScreenToWorldPoint(playerInput.Player.Aiming.ReadValue<Vector2>());
+
     if (_actorMovements.IsJumping)
       _actorMovements.JumpAnimation();
   }
@@ -53,8 +55,7 @@ public class PlayerController : Actor
 
   private void Jump()
   {
-    if (Input.GetButtonDown("Jump"))
-      _actorMovements.Jump();
+    _actorMovements.Jump();
   }
 
   public override void Death()

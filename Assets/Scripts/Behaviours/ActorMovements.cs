@@ -40,6 +40,7 @@ public class ActorMovements : MonoBehaviour
 
   public void Jump()
   {
+    Debug.Log(OnGroundCheck() + " , " + IsJumping);
     if (!OnGroundCheck())
       return;
 
@@ -47,7 +48,6 @@ public class ActorMovements : MonoBehaviour
 
     _progress = 0.0f;
 
-    Debug.Log(OnGroundCheck() + " , " + IsJumping);
     _startPosition = _actorObject.position;
   }
 
@@ -70,9 +70,8 @@ public class ActorMovements : MonoBehaviour
 
   public bool OnGroundCheck()
   {
-    Ray2D ray = new Ray2D(_groundCheckPoint.position, Vector2.down * groundCheckDistance);
     RaycastHit2D hit;
-    hit = Physics2D.Raycast(_groundCheckPoint.position, Vector2.down * groundCheckDistance);
+    hit = Physics2D.Raycast(_groundCheckPoint.position, Vector2.down, groundCheckDistance);
 
     if (hit.collider != null)
     {

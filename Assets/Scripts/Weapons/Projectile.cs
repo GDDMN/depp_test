@@ -31,6 +31,4 @@ public class Projectile : MonoBehaviour
   //{
   //  var particle = Instantiate(destroyParticle, transform.position, Quaternion.identity);
   //}
-
-
 }
