@@ -101,6 +101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 8
+  destroyParticle: {fileID: 19821674, guid: da7f40389b3134a438872de8d69278d2, type: 3}
+  ricochetParticle: {fileID: 19876930, guid: d322d582353d67540a1a4a2b14818567, type: 3}
 --- !u!50 &6410035280118065222
 Rigidbody2D:
   serializedVersion: 4
