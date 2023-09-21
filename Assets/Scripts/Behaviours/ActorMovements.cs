@@ -32,6 +32,12 @@ public class ActorMovements : MonoBehaviour
     _actorObject.position = new Vector3(xPos, startPosition.y, startPosition.z);
   }
 
+  public void Rotation(Vector2 position)
+  {
+    Vector2 direction = new Vector2(position.x - transform.position.x, position.y - transform.position.y);
+    transform.up = direction;
+  }
+
   public void Jump()
   {
     if (!OnGroundCheck())

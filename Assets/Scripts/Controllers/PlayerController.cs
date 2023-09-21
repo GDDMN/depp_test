@@ -6,6 +6,7 @@ public class PlayerController : Actor
   [SerializeField] private ActorShooting _actorShooting;
   private PlayerInput playerInput;
   private float _direction;
+  private Vector3 mousePos;
 
   private void Awake()
   {
@@ -28,28 +29,24 @@ public class PlayerController : Actor
     playerInput.Player.Shoot.performed += context => Attack();
   }
 
-  private void Update()
+  private void FixedUpdate()
   {
     _direction = playerInput.Player.Run.ReadValue<float>();
     Run();
-  }
-
-  private void FixedUpdate()
-  {
-    if(_actorMovements.IsJumping)
+    mousePos = Camera.main.ScreenToWorldPoint(playerInput.Player.Aiming.ReadValue<Vector2>());
+    if (_actorMovements.IsJumping)
       _actorMovements.JumpAnimation();
   }
 
 
   private void Run()
   {
-    _direction = (Input.GetAxis("Horizontal"));
     _actorMovements.Run(_direction);
+    _actorMovements.Rotation(mousePos);
   }
 
   private void Attack()
   {
-    Vector3 mousePos = Camera.main.ScreenToWorldPoint(playerInput.Player.Aiming.ReadValue<Vector2>());
     Vector2 direction = mousePos - transform.position;
     _actorShooting.Shoot(direction);
   }

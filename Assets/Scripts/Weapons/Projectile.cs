@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+  [SerializeField] private float _speed;
+  private Vector2 _direction;
+  private Rigidbody2D _rigidbody;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  public void Init(Vector2 direction)
+  {
+    _direction = direction;
+    _rigidbody = GetComponent<Rigidbody2D>();
+    _rigidbody.velocity = _direction * _speed;
+  }
+
+  private void OnCollisionEnter2D(Collision2D collision)
+  {
+    _rigidbody.velocity = Vector2.Reflect(_direction, collision.contacts[0].normal) * _speed;
+  }
 }
