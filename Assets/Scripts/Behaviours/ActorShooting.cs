@@ -9,5 +9,6 @@ public class ActorShooting : MonoBehaviour
   {
     var projectile = Instantiate(_projectile, _shootPosition.position , Quaternion.identity);
     projectile.Init(direction);
+    Destroy(projectile, .5f);
   }
 }
