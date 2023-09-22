@@ -18,17 +18,10 @@ public class Projectile : MonoBehaviour
 
   private void OnCollisionEnter2D(Collision2D collision)
   {
-    _rigidbody.velocity = Vector2.Reflect(_direction, collision.contacts[0].normal) * _speed;
+    _direction = Vector2.Reflect(_direction, collision.contacts[0].normal).normalized;
+    _rigidbody.velocity = _direction * _speed;
+
     var particle = Instantiate(ricochetParticle, transform.position, Quaternion.identity);
+    Destroy(particle, .3f);
   }
-
-  private void OnTriggerEnter2D(Collider2D collision)
-  {
-
-  }
-
-  //private void Destruction()
-  //{
-  //  var particle = Instantiate(destroyParticle, transform.position, Quaternion.identity);
-  //}
 }

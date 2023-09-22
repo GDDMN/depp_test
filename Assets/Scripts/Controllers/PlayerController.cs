@@ -49,7 +49,7 @@ public class PlayerController : Actor
 
   private void Attack()
   {
-    Vector2 direction = mousePos - transform.position;
+    Vector2 direction = (mousePos - transform.position).normalized;
     _actorShooting.Shoot(direction);
   }
 
