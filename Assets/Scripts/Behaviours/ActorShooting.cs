@@ -4,6 +4,7 @@ public class ActorShooting : MonoBehaviour
 {
   [SerializeField] private Projectile _projectile;
   [SerializeField] private Transform _shootPosition;
+  private bool CanShoot = true;
   
   public void Shoot()
   {

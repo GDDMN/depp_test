@@ -7,7 +7,7 @@ public class Wall : MonoBehaviour, IDamageable
     projectile.direction = Vector2.Reflect(projectile.direction, collision.contacts[0].normal).normalized;
     projectile.rigidbody.velocity = projectile.direction * projectile.Speed;
 
-    var particle = Instantiate(projectile.RicochetParticle, transform.position, Quaternion.identity);
+    var particle = Instantiate(projectile.RicochetParticle, projectile.transform.position, Quaternion.identity);
     Destroy(particle, .3f);
   }
 }
