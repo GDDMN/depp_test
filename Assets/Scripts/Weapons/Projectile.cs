@@ -7,20 +7,23 @@ public class Projectile : MonoBehaviour
   [SerializeField] private float _speed;
   [SerializeField] private float _lifetimeSpeed;
   [Header("Visual")]
-  [SerializeField] private ParticleSystem destroyParticle;
-  [SerializeField] private ParticleSystem ricochetParticle;
+  [SerializeField] private ParticleSystem _destroyParticle;
+  [SerializeField] private ParticleSystem _ricochetParticle;
   
   private float _lifetime = 1f;
   private float _time = 0;
 
-  private Vector2 _direction;
-  private Rigidbody2D _rigidbody;
+  [HideInInspector] public Rigidbody2D rigidbody;
+  [HideInInspector] public Vector2 direction;
+
+  public float Speed => _speed;
+  public ParticleSystem RicochetParticle => _ricochetParticle;
 
   public void Init(Vector2 direction)
   {
-    _direction = direction;
-    _rigidbody = GetComponent<Rigidbody2D>();
-    _rigidbody.velocity = _direction * _speed;
+    this.direction = direction;
+    rigidbody = GetComponent<Rigidbody2D>();
+    rigidbody.velocity = direction * _speed;
 
     StartLifeTimeCoroutine();
   }
@@ -43,16 +46,17 @@ public class Projectile : MonoBehaviour
 
   private void OnCollisionEnter2D(Collision2D collision)
   {
-    _direction = Vector2.Reflect(_direction, collision.contacts[0].normal).normalized;
-    _rigidbody.velocity = _direction * _speed;
+    var damageble = collision.gameObject.GetComponent<IDamageable>();
 
-    var particle = Instantiate(ricochetParticle, transform.position, Quaternion.identity);
-    Destroy(particle, .3f);
+    if (damageble == null)
+      return;
+
+    damageble.TakeDamage(collision, this);
   }
 
   private void DestroyProgectile()
   {
-    var particle = Instantiate(destroyParticle, transform.position, Quaternion.identity);
+    var particle = Instantiate(_destroyParticle, transform.position, Quaternion.identity);
     Destroy(this.gameObject);
   }
 }
