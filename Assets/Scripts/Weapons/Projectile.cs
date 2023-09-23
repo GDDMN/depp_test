@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour
   [Header("Data")]
   [SerializeField] private float _speed;
   [SerializeField] private float _lifetimeSpeed;
+  [SerializeField] private float _damage= 0.3f;
   [Header("Visual")]
   [SerializeField] private ParticleSystem _destroyParticle;
   [SerializeField] private ParticleSystem _ricochetParticle;
@@ -16,6 +17,7 @@ public class Projectile : MonoBehaviour
   [HideInInspector] public Rigidbody2D rigidbody;
   [HideInInspector] public Vector2 direction;
 
+  public float Damage => _damage;
   public float Speed => _speed;
   public ParticleSystem RicochetParticle => _ricochetParticle;
 

@@ -9,8 +9,10 @@ public struct ActorData
   public float Health;
 }
 
-public abstract class Actor : MonoBehaviour
+public abstract class Actor : MonoBehaviour, IDamageable
 {
+  public event Action OnTakeDamage;  
+
   [Header("Actor data")]
   public ActorData actorData;
 
@@ -18,6 +20,19 @@ public abstract class Actor : MonoBehaviour
   [HideInInspector] public UnityAction getHurt;
   [HideInInspector] public UnityAction OnDeath;
   [HideInInspector] public bool Hurt;
+  
+  public void Deth()
+  {
+    OnDeath.Invoke();
+    Destroy(gameObject);
+  }
 
-  abstract public void Death();
+  public void TakeDamage(Collision2D collision, Projectile projectile)
+  {
+    actorData.Health -= projectile.Damage;
+    OnTakeDamage?.Invoke();
+
+    if (actorData.Health <= 0f)
+      Deth();
+  }
 }

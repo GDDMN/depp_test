@@ -16,17 +16,17 @@ public class PlayerController : Actor
   private void OnEnable()
   {
     playerInput.Enable();
+
+    playerInput.Player.Shoot.performed += context => Attack();
+    playerInput.Player.Jump.performed += context => Jump();
   }
 
   private void OnDisable()
   {
     playerInput.Disable();
-  }
 
-  private void Start()
-  {
-    playerInput.Player.Shoot.performed += context => Attack();
-    playerInput.Player.Jump.performed += context => Jump();
+    playerInput.Player.Shoot.performed -= context => Attack();
+    playerInput.Player.Jump.performed -= context => Jump();
   }
 
   private void FixedUpdate()
@@ -56,13 +56,5 @@ public class PlayerController : Actor
   private void Jump()
   {
     _actorMovements.Jump();
-  }
-
-  public override void Death()
-  {
-    //if (vertex != null)
-    //  vertex.RemoveActorAction(this);
-    OnDeath.Invoke();
-    Destroy(gameObject);
   }
 }

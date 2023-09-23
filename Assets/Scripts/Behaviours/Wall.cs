@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour, IDamageable
 {
+  public void Deth()
+  {
+
+  }
+
   public void TakeDamage(Collision2D collision, Projectile projectile)
   {
     projectile.direction = Vector2.Reflect(projectile.direction, collision.contacts[0].normal).normalized;
