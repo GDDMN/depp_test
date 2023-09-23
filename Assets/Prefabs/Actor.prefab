@@ -199,6 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _projectile: {fileID: 3131578518203860099, guid: 8203ebfdf900c4a448d88277fc2cfb7b, type: 3}
   _shootPosition: {fileID: 4094295542464650918}
+  _reloadingSpeed: 2.5
 --- !u!1 &8018403364105515501
 GameObject:
   m_ObjectHideFlags: 0
