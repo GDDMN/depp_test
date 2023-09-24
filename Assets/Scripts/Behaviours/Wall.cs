@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour, IDamageable
 {
-  public void Deth()
+  public void Deth(Projectile projectile)
   {
 
   }

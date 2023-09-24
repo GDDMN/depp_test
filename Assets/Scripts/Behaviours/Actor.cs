@@ -1,38 +1,52 @@
 using System;
 using UnityEngine;
-using UnityEngine.Events;
-
-[Serializable]
-public struct ActorData
-{
-  [Range(0f, 1f)]
-  public float Health;
-}
 
 public abstract class Actor : MonoBehaviour, IDamageable
 {
-  public event Action OnTakeDamage;  
+  public event Action<float> OnTakeDamage;
+  public event Action OnDeath;
+
+  [Header("Visual")]
+  [SerializeField] private ParticleSystem _dethFX;
+  [SerializeField] private ParticleSystem _hitFX;
 
   [Header("Actor data")]
   public ActorData actorData;
-
-  [HideInInspector] public UnityAction groundedOnPlatform;
-  [HideInInspector] public UnityAction getHurt;
-  [HideInInspector] public UnityAction OnDeath;
-  [HideInInspector] public bool Hurt;
   
+
+  private void Start()
+  {
+    MainWindow.Instance.CreateHealthbar(this, actorData.Name);
+  }
+
+  private void Update()
+  {
+    if (transform.position.y <= -16f)
+      Deth();
+  }
+
+  public void Deth(Projectile projectile)
+  {
+    OnDeath?.Invoke();
+    projectile.DestroyProgectile();
+    var particle = Instantiate(_dethFX, transform.position, Quaternion.identity);
+    Destroy(gameObject);
+  }
+
   public void Deth()
   {
-    OnDeath.Invoke();
+    OnDeath?.Invoke();
+    var particle = Instantiate(_dethFX, transform.position, Quaternion.identity);
     Destroy(gameObject);
   }
 
   public void TakeDamage(Collision2D collision, Projectile projectile)
   {
     actorData.Health -= projectile.Damage;
-    OnTakeDamage?.Invoke();
+    OnTakeDamage?.Invoke(actorData.Health);
+    var particle = Instantiate(_hitFX, transform.position, Quaternion.identity);
 
     if (actorData.Health <= 0f)
-      Deth();
+      Deth(projectile);
   }
 }

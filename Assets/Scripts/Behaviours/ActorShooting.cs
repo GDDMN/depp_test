@@ -20,8 +20,8 @@ public class ActorShooting : MonoBehaviour
 
   private void Start()
   {
-    OnShoot += Header.Instance.Baraban.BulletRemove;
-    OnReloading += Header.Instance.Baraban.SetCounterValue;
+    OnShoot += MainWindow.Instance.Header.Baraban.BulletRemove;
+    OnReloading += MainWindow.Instance.Header.Baraban.SetCounterValue;
   }
 
   public void Shoot()
@@ -60,7 +60,7 @@ public class ActorShooting : MonoBehaviour
     }
 
     OnReloading?.Invoke(_reloadingTime);
-    Header.Instance.Baraban.ReloadBullets();
+    MainWindow.Instance.Header.Baraban.ReloadBullets();
 
     _time = 0f;
     _canShoot = true;

@@ -56,7 +56,7 @@ public class Projectile : MonoBehaviour
     damageble.TakeDamage(collision, this);
   }
 
-  private void DestroyProgectile()
+  public void DestroyProgectile()
   {
     var particle = Instantiate(_destroyParticle, transform.position, Quaternion.identity);
     Destroy(this.gameObject);

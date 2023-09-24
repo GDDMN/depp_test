@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Header : Singleton<Header>
+public class Header : MonoBehaviour
 {
   public Baraban Baraban;
 }
