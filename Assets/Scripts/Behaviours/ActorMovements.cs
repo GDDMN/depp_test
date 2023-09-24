@@ -10,14 +10,19 @@ public class ActorMovements : MonoBehaviour
 
   [SerializeField] private float _jumpSpeed;
   [SerializeField] private float _jumpForce;
+  
+  [Header("Visual")]
+  [SerializeField] private Animator _animator;
 
   public Transform _groundCheckPoint;
 
   private Vector3 _startPosition;
   private float _progress = 0.0f;
+  private bool _IsRuning = false;
 
   private float groundCheckDistance = 0.3f;
   public bool IsJumping { get; private set; }
+
 
   private void OnDrawGizmos()
   {
@@ -30,6 +35,13 @@ public class ActorMovements : MonoBehaviour
 
     float xPos = startPosition.x + direction * _walkSpeed * Time.deltaTime;
     _actorObject.position = new Vector3(xPos, startPosition.y, startPosition.z);
+
+    if(direction != 0f)
+      _IsRuning = true;
+    else
+      _IsRuning = false;
+
+    _animator.SetBool("IsRunning", _IsRuning);
   }
 
   public void Rotation(Vector2 position)
