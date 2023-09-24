@@ -24,10 +24,10 @@ public class ActorMovements : MonoBehaviour
   public bool IsJumping { get; private set; }
 
 
-  private void OnDrawGizmos()
-  {
-    Gizmos.DrawLine(_groundCheckPoint.position, _groundCheckPoint.position + new Vector3(0f, -groundCheckDistance, 0f));
-  }
+  //private void OnDrawGizmos()
+  //{
+  //  Gizmos.DrawLine(_groundCheckPoint.position, _groundCheckPoint.position + new Vector3(0f, -groundCheckDistance, 0f));
+  //}
 
   public void Run(float direction)
   {

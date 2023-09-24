@@ -46,6 +46,7 @@ public abstract class Actor : MonoBehaviour, IDamageable
     OnTakeDamage?.Invoke(actorData.Health);
     var particle = Instantiate(_hitFX, transform.position, Quaternion.identity);
 
+    projectile.DestroyProgectile();
     if (actorData.Health <= 0f)
       Deth(projectile);
   }
